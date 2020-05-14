@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 5 Canvas by YKSS</title>
+</head>
+<body>
+    <canvas id = "draw" width="800" height="800"></canvas>
+    <script>
+        const canvas = document.querySelector("#draw");
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.strokeStyle = '#BADA55';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 100;
+
+        // flag역할 : 지금 그리고있는지 아닌지.
+        let isDrawing = false;
+        // 초기 좌표값 설정
+        let lastX = 0;
+        let lastY = 0;
+        // 색상 변경을 위한 변수
+        let hue = 0;
+        // 선 굵기를 위한 Flag
+        let direction = true;
+
+        function draw (e) {
+            if(!isDrawing) return; // 그리고 있는게 아니면 종료
+            // 선 색상 설정 
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.beginPath();
+            // start from
+            ctx.moveTo(lastX,lastY);
+            // go to
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX,lastY] = [e.offsetX, e.offsetY];
+            //색상이 계속 변경 360 이상이되면 다시 0부터 
+            hue++;
+            if(hue >= 360) hue =0;
+            // 선 굵기가 일정 크기가 될때 굵기 증감 조절
+            if(ctx.lineWidth>= 100 || ctx.lineWidth <= 1){
+                direction = !direction;
+            }
+            if(direction) {
+                ctx.lineWidth++;
+            }else{
+                ctx.lineWidth--;
+            }
+            
+        }
+        // 마우스를 캔버스위에서 움직일 때 draw 함수 호출
+        canvas.addEventListener('mousemove',draw);
+        // 마우스를 클릭했을 때 그리는 상태로 플래그를 바꾸고 좌표를 현재 클릭위치로 설정.
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX,lastY] = [e.offsetX, e.offsetY];
+        });
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+    </script>
+    <style>
+        html, body {
+            margin: 0;
+        }
+    </style>
+</body>
+</html>
