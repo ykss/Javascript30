@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Trick by YKSS</title>
+</head>
+<body>
+    <p onClick="makeGreen()">xBREAKxDOWNx</p>
+
+    <script>
+        const dogs = [{ name : 'Snikers', age: 2}, { name : 'hugo', age: 8}];
+
+        function makeGreen() {
+            const p = document.querySelector('p');
+            p.style.color = '#BADA55';
+            p.style.fontSize = '50px';
+        }
+        
+        // Regular
+        console.log('hello');
+
+        // Interpolated
+        console.log('hello Im %s, nice to meet you.','ykss');
+
+        // Styled
+        console.log('%c this is styled console.log','font-size:50px; backgroud:red; text-shadow: 10px 10px 0 blue');
+
+        // warning!
+        console.warn("warning! warning!");
+
+        // Error :|
+        console.error('error!');
+        // Info
+        console.info('이것은 유용한 정보입니다.');
+
+        // Testing
+        const p = document.querySelector('p');
+        console.assert(p.classList.contains('ouch'),'that is wrong!');
+
+        // clearing
+        console.clear();
+
+        // Viewing DOM Elements
+        console.log(p);
+        console.dir(p);
+
+        console.clear();
+
+        // Grouping together
+        dogs.forEach(dog => {
+            console.groupCollapsed(`${dog.name}`);
+            console.log(`this is ${dog.name}`);
+            console.log(`${dog.name} is ${dog.age} years old.`);
+            console.log(`${dog.name} is ${dog.age *7} dog years old`);
+            console.groupEnd(`${dog.name}`);
+        });
+    
+        // counting
+        console.count('mount');
+        console.count('kante');
+        console.count('kepa');
+        console.count('mount');
+        console.count('kante');
+        console.count('mount');
+        console.count('kante');
+        console.count('kepa');
+        console.count('mount');
+        console.count('kepa');
+        console.count('mount');
+        console.count('kepa'); 
+        console.count('kepa'); 
+        console.count('kepa');
+
+        // timing
+        console.time('fetching data');
+        fetch('https://api.github.com/users/wesbos')
+        .then(data => data.json())
+        .then(data => {
+            console.timeEnd('fetching data');
+            console.log(data);
+        });
+        
+        console.table(dogs);
+    </script>
+</body>
+</html>
