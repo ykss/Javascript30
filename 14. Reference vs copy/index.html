@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Reference vs Copy by YKSS</title>
+</head>
+<body>
+    <script>
+        // 스트링, 숫자, 불린타입으로 시작
+        
+        let age = 28;
+        let age2 = age;
+        console.log(age, age2); // 28, 28
+        age = 30;
+        console.log(age,age2); //30, 28
+
+        let str = "hello";
+        let str2 = str;
+        console.log(str, str2); // hello hello
+        str = 'hi';
+        console.log(str, str2); // hi hello
+    
+
+        //아래 배열이 있다고 하자.
+        const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+        //이 배열을 복사하고 싶다
+        const team = players;
+        console.log(players, team); //['Wes', 'Sarah', 'Ryan', 'Poppy']
+
+        //만약에 이렇게하면....? 결론은 배열은 카피가 아닌 레퍼런스
+        team[3] = 'Lux';
+        console.log(players, team); // 둘다 ["Wes", "Sarah", "Ryan", "Lux"]
+
+        //카피를 실시해보자.
+        const team2 = players.slice();
+        console.log(team2); //["Wes", "Sarah", "Ryan", "Lux"]
+
+        //이렇게도해보고        
+        const team3 = [].concat(players);
+        console.log(team3); //["Wes", "Sarah", "Ryan", "Lux"]
+
+        //요러케도해보자.
+        const team4 = [...players];
+        team4[3]= 'hehs';
+        console.log(team4); //  ["Wes", "Sarah", "Ryan", "hehs"]
+
+        //마지막으로..
+        const team5 = Array.from(players);
+        console.log(team5); // ["Wes", "Sarah", "Ryan", "Lux"]
+
+        //이번엔 배열이 아닌 객체로 해보자.
+        const person = {
+            name: 'Wes Bos',
+            age: 80
+        };
+
+        //복사를 해보자.
+        const captain = person;
+        // captain.number = 99;
+        // console.log(person); // 캡틴에 프로퍼티를 동적으로 생성했는데, 펄슨에 프로퍼티가 추가된다.
+        //이것을 볼때 객체 또한 Reference라고 할 수 있다.
+
+        //카피하려면 어떻게해야할까?
+        const cap2 = Object.assign({}, person, {number:9, age:12});
+        console.log(cap2);
+        console.log(person);
+
+        //spread는 어떨까?
+        const cap3 = {...person};
+        console.log(cap3);
+
+        const wes = {
+            name : 'ykss',
+            age : 28,
+            number : 26,
+            job : 'developer',
+            social : {
+                github : 'ykss',
+                facebook : 'kyeongsangyu'
+            }
+        };
+
+        console.clear();
+        console.log(wes);
+
+        const dev = Object.assign({}, wes);
+
+        console.log(dev);
+        dev.social.facebook ='ykss';
+        console.log(dev.social);
+        console.log(wes.social); // 얘도 바뀐다. 이건 객체안에 또 객체가 있는데 깊은 복제가 안되었기 때문이다.
+
+        const dev2 = JSON.parse(JSON.stringify(wes));
+        dev2.social.facebook = 'test';
+        console.log(dev2);
+
+
+    </script>
+</body>
+</html>
