@@ -72,13 +72,13 @@
             setTimeout(() => timeUp = true, 10000);
         }
         function bonk(e) {
-            if(!e.Trusted) return;
+            if(!e.isTrusted) return;
             score++;
-            this.parentNode.classList.remove('up')
+            this.parentNode.classList.remove('up');
             scoreBoard.textContent = score;
         }
 
-        moles.forEach(mole => mole.addEventListener('click'),bonk)
+        moles.forEach(mole => mole.addEventListener('click',bonk));
     </script>
 </body>
 
