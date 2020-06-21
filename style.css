@@ -1,9 +1,26 @@
 html {
     font-family: sans-serif;
+    box-sizing: border-box;
+    font-size: 10px;
+    background: #6d6fdd;
 }
+
+  
+body {
+    padding: 0;
+    margin: 0;
+  }
 
 h1 {
     text-align: center;
-    justify-content: center;
+    font-size: 10rem;
+    line-height: 1;
+    margin-bottom: 0;
+    color: white;
 }
 
+li {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: white;
+}
